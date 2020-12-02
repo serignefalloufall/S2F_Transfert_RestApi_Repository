@@ -1,4 +1,6 @@
 package com.transfert.s2f_transfert.entities;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +25,7 @@ public class Emeteur {
     @Column(name = "cni")
     private String cni;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "emeteur", fetch = FetchType.LAZY)
     private List<Envoie> envoies = new ArrayList<>();
 

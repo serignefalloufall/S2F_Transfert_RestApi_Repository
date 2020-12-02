@@ -1,5 +1,7 @@
 package com.transfert.s2f_transfert.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 @Entity
@@ -15,9 +17,11 @@ public class Envoie {
     @Column(name = "montant")
     private int montant;
 
+
     @ManyToOne
     @JoinColumn(name = "emeteur_id")
     private Emeteur emeteur = new Emeteur();
+
 
     @ManyToOne
     @JoinColumn(name = "recepteur_id")

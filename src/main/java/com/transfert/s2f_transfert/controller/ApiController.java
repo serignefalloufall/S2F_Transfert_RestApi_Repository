@@ -7,10 +7,12 @@ import com.transfert.s2f_transfert.entities.Emeteur;
 import com.transfert.s2f_transfert.entities.Envoie;
 import com.transfert.s2f_transfert.entities.Info;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin
 @RestController
 @RequestMapping(value = "/api")
 public class ApiController {
@@ -25,7 +27,7 @@ public class ApiController {
     EnvoieRepository envoieRepository;
 
     @PostMapping("/add")
-    public String addEnvoie(@RequestBody Info info){
+    public ResponseEntity<?> addEnvoie(@RequestBody Info info){
 
     if(info != null){
 
@@ -39,10 +41,12 @@ public class ApiController {
         e.setRecepteur(info.getRecepteur());
         e.setMontant(info.getEnvoie().getMontant());
         e.setDate(info.getEnvoie().getDate());
+
         envoieRepository.save(e);
-        return "Envoie enregistre avec succe";
+        
+        return ResponseEntity.status(201).body(e);
     }else {
-        return "ok";
+        return ResponseEntity.status(400).body("Erreur d'insertion");
     }
 
 
@@ -50,8 +54,16 @@ public class ApiController {
 
     @GetMapping("/allEnvoie")
     public List<Envoie> listeEnvoie(){
+
         return envoieRepository.findAll();
     }
+
+    @GetMapping("/allEmeteur")
+    public @ResponseBody List<Emeteur> listeEmeteurs(){
+
+        return emeteurRepository.findAll();
+    }
+
 
 
 }
